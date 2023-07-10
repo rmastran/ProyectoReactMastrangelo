@@ -1,9 +1,12 @@
 import './App.css';
+import ItemListContainer from './components/ItemListContainer';
+import NavBar from './components/NavBar';
 
 function App() {
   return (
     <div>
-      Pelotas de Fútbol
+       <NavBar></NavBar>
+       <ItemListContainer/>
     </div>
   );
 }
