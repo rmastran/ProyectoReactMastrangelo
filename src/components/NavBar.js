@@ -9,21 +9,18 @@ const NavBar = () => {
         <>
           <Navbar bg="dark" data-bs-theme="dark">
             <Container>
-                <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
-                    <div>
+                
                         <Navbar.Brand href="#La-Mejor-Pelota"><Logo/></Navbar.Brand>
-                    </div>
-                    <div>
+                    
+                
                         <Nav className="me-auto">
-                        <div style={{display: "flex", alignItems: "center"}}>
+                        <div style={{display: "flex"}}>
                             <Nav.Link href="#Inicio">Inicio</Nav.Link>
                             <Nav.Link href="#Pelotas">Pelotas</Nav.Link>
                             <Nav.Link href="#Carrito"><CartWidget/></Nav.Link>
                         </div>
                         </Nav>
-                    </div>
                     
-                </div>
             </Container>
           </Navbar>
         </>
