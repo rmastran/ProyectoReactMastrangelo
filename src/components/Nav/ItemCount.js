@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
+import Button from 'react-bootstrap/Button';
 
 function ItemCount ({ initial, stock, onAdd }) {
     const [contador, setContador] = useState(parseInt(initial));
 
     const restar = () => {
-        setContador(contador - 1);
+        if (contador > 0){
+            setContador(contador - 1);
+        }   
     }
 
     const sumar = () => {
-        setContador(contador + 1);
+        if (contador < stock){
+            setContador(contador + 1);
+        }
     }
 
     useEffect(() => {
@@ -17,11 +22,11 @@ function ItemCount ({ initial, stock, onAdd }) {
 
     return (
         <div>
-            <button disabled={contador <=1} onClick={restar}>-</button>
+            <Button onClick={restar}>-</Button>
             <span>{contador}</span>
-            <button disabled={contador >=stock} onClick={sumar}>+</button>
+            <Button onClick={sumar}>+</Button>
             <div>
-                <button disabled={stock <=0} onClick={() => onAdd(contador)}>Agregar al Carrito</button>
+                <Button disabled={contador === 0} onClick={() => onAdd(contador)}>Agregar al Carrito</Button>
             </div>
         </div>
     )
