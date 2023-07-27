@@ -12,10 +12,10 @@ export const getDataPelotas = new Promise (resolve => {
     }, 2000);
 });
 
-export const getItemPelota = () => {
+export const getItemPelota = (id) => {
     return new Promise((resolve)=>{
         setTimeout(() => {
-            resolve(pelotas[2]);
+            resolve(pelotas.find((dataPelota)=> dataPelota.id === id));
         }, 2000);
     });
 }
