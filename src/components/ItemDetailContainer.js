@@ -6,13 +6,21 @@ import { useParams } from "react-router-dom";
 const ItemDetailContainer = () => {
 
     const [dataPelota, setDataPelota] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
     const { id }=useParams()
-    useEffect(() => {
-        getItemPelota(id)
-        .then((res) => setDataPelota(res))
-        .catch((error) => console.log(error))
-    }, [])
 
+    useEffect(() => {
+        getItemPelota(Number(id))
+        .then((res) => {
+        setDataPelota(res);
+        setIsLoading(false);
+        })
+        .catch((error) => console.log(error))
+    }, [id]);
+
+    if(isLoading){
+        return <div>Cargando...</div>
+    }
     return (
         <div>
             <ItemDetail dataPelota={dataPelota}/>

@@ -9,7 +9,8 @@ function App() {
     <BrowserRouter>
        <NavBar/>
        <Routes>
-        <Route path='/' element={<ItemListContainer/>}/>
+        <Route path='/' element={<ItemListContainer greeting='Bienvenidos!'/>}/>
+        <Route path='/category/:categoryId' element={<ItemListContainer greeting='Bienvenido a la categoría:'/>}/>
         <Route path='/item/:id' element={<ItemDetailContainer/>}/>
        </Routes>
     </BrowserRouter>

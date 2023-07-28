@@ -1,25 +1,24 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import CartWidget from './CartWidget';
 import Logo from '../Logo';
+import { Link } from 'react-router-dom';
 
 const NavBar = () => {
     return (
         <>
           <Navbar bg="dark" data-bs-theme="dark">
             <Container>
+                <Link to="/">
+                <Navbar.Brand><Logo/></Navbar.Brand>
+                </Link>
                 
-                        <Navbar.Brand href="#La-Mejor-Pelota"><Logo/></Navbar.Brand>
-                    
-                
-                        <Nav className="me-auto">
-                        <div style={{display: "flex"}}>
-                            <Nav.Link href="#Inicio">Inicio</Nav.Link>
-                            <Nav.Link href="#Pelotas">Pelotas</Nav.Link>
-                            <Nav.Link href="#Carrito"><CartWidget/></Nav.Link>
-                        </div>
-                        </Nav>
+                <Nav className="me-auto">
+                  <div style={{display: "flex"}}>
+                      <Nav.Link as={Link}to= "/Inicio">Inicio</Nav.Link>
+                      <Nav.Link as={Link} to= "category/Pelotas">Pelotas</Nav.Link>
+                      <Nav.Link as={Link}to= "/Carrito"><CartWidget/></Nav.Link>
+                  </div>
+                </Nav>
                     
             </Container>
           </Navbar>
