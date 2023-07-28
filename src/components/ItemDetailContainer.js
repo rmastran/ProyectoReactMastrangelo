@@ -16,6 +16,7 @@ const ItemDetailContainer = () => {
         setIsLoading(false);
         })
         .catch((error) => console.log(error))
+        .finally(()=> setIsLoading(false))
     }, [id]);
 
     if(isLoading){
