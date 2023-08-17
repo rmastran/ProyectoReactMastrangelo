@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ItemCount from "./Nav/ItemCount";
 import { Link } from "react-router-dom";
+import { CartContext } from "../context/CartContext";
 
 const ItemDetail = ({dataPelota}) => {
 
     const [goToCart, setToCart] = useState(false);
 
-    const onAdd = (cantidad) => {
-        // console.log(`Compraste ${cantidad} unidades`);
+    const { addToCart } = useContext(CartContext);
+
+    const onAdd = (dataPelota, cantidad) => {
+        addToCart(dataPelota, cantidad);
         setToCart(true);
     }
 
