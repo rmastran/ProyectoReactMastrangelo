@@ -2,43 +2,52 @@ import { createContext, useState } from "react";
 
 export const CartContext = createContext();
 
-const CartProvider = ({ children }) => {
+export const CartProvider = ({ children }) => {
 
     const [cartArray, setCartArray] = useState([]);
-    console.log(cartArray);
+
     const addToCart = (dataPelota, cantidad) => {
-        console.log(`Agregaste ${dataPelota.title}, ${cantidad} unidades.`);
-        const newObject = {
-            item: dataPelota,
-            cantidad
+        if (isInCart(dataPelota.id)) {
+            setCartArray(cartArray.map((product)=>{
+                if(product.id === dataPelota.item.id){
+                    return {...product, cantidad: product.cantidad + cantidad}
+                } else {
+                    return product
+                }
+            }))
+        } else {
+            console.log(`Agregaste ${dataPelota.title}, ${cantidad} unidades.`);
+            const newObject = {
+                item: dataPelota,
+                cantidad
         }
-        setCartArray([...cartArray, newObject]);
+            setCartArray([...cartArray, newObject])
+            }
     }
-
-
-   const deleteItem = (id) => {
-    const updatedCart = cartArray.filter(element => element.id !== id);
-    setCartArray(updatedCart);
-   }
 
    const clearCart = () => {
     setCartArray([]);
    }
 
    const isInCart = (id) => {
-    return cartArray.some(element => element.id === id);
+    return cartArray.some((item) => item.id === id);
    }
 
-    const value = {
-        cartArray,
-        addToCart,
-        deleteItem,
-        clearCart,
-        isInCart
-    }
+   const deleteItem = (id) => {
+    const updatedCart = cartArray.filter((item) => item.id !== id);
+    setCartArray(updatedCart);
+   }
+
+   const cartQuantity = () => {
+    return cartArray.reduce((acc, item)=> acc + item.cantidad, 0)
+   }
+
+   const total = () => {
+    return cartArray.reduce((acc, item)=> acc + item.cantidad * item.price, 0)
+   }
 
     return (
-        <CartContext.Provider value={value}>
+        <CartContext.Provider value={{cartArray, addToCart, clearCart, deleteItem, cartQuantity, total}}>
             {children}
         </CartContext.Provider>
     )

@@ -1,8 +1,7 @@
 import ItemList from './ItemList';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getDataPelotas } from '../mock/data';
 import { useParams } from 'react-router-dom';
-import { CartContext } from '../context/CartContext';
 
 const ItemListContainer = ({greeting = "Ofertas"}) => {
 
@@ -22,7 +21,7 @@ const ItemListContainer = ({greeting = "Ofertas"}) => {
 
     return (
         <div className='d-flex flex-column align-items-center'>
-            {  dataPelotas.length == 0 
+            {  dataPelotas.length === 0 
             ?
             <h1>Cargando..</h1>
             :
