@@ -5,7 +5,7 @@ export const CartContext = createContext();
 const CartProvider = ({ children }) => {
 
     const [cartArray, setCartArray] = useState([]);
-
+    console.log(cartArray);
     const addToCart = (dataPelota, cantidad) => {
         console.log(`Agregaste ${dataPelota.title}, ${cantidad} unidades.`);
         const newObject = {
@@ -14,7 +14,7 @@ const CartProvider = ({ children }) => {
         }
         setCartArray([...cartArray, newObject]);
     }
-    console.log(addToCart);
+
 
    const deleteItem = (id) => {
     const updatedCart = cartArray.filter(element => element.id !== id);
