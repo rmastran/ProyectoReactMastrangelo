@@ -14,6 +14,7 @@ const CartProvider = ({ children }) => {
         }
         setCartArray([...cartArray, newObject]);
     }
+    console.log(addToCart);
 
    const deleteItem = (id) => {
     const updatedCart = cartArray.filter(element => element.id !== id);
