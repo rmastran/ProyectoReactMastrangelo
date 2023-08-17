@@ -1,18 +1,18 @@
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 
-const CartItem = ({ item, handleDelete }) => {
+const CartItem = ({ product, handleDelete }) => {
     return (
         <Card body>
             <Container>
                 <Row>
                     <Col>
-                        {item.product.tittle}
+                        {product.dataPelota.title}
                     </Col>
                     <Col>
-                        {item.product.quant}
+                        {product.dataPelota.cantidad}
                     </Col>
                     <Col>
-                        {item.product.price}
+                        {product.dataPelota.price}
                     </Col>
                     <Col>
                         <Button variant='danger' onClick={handleDelete}>Borrar</Button>
@@ -22,3 +22,5 @@ const CartItem = ({ item, handleDelete }) => {
         </Card>
     )
 }
+
+export default CartItem;
