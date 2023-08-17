@@ -9,7 +9,7 @@ const ItemDetail = ({dataPelota}) => {
 
     const { addToCart } = useContext(CartContext);
 
-    const onAdd = (dataPelota, cantidad) => {
+    const onAdd = (cantidad) => {
         addToCart(dataPelota, cantidad);
         setToCart(true);
     }
