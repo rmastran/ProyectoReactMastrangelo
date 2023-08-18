@@ -14,7 +14,7 @@ const Cart = () => {
                 <p>Total a pagar: ${total()}</p>
                 <div>
                     <button className="btn btn-ganger" onClick={clearCart}>Vaciar carrito</button>
-                    <link className="btn btn-dark">Terminar la compra</link>
+                    <Link className="btn btn-dark">Terminar la compra</Link>
                 </div>
             </div>
             :    <div>

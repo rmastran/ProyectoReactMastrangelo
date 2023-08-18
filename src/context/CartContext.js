@@ -6,19 +6,19 @@ export const CartProvider = ({ children }) => {
 
     const [cartArray, setCartArray] = useState([]);
 
-    const addToCart = (dataPelota, cantidad) => {
-        if (isInCart(dataPelota.id)) {
+    const addToCart = (item, cantidad) => {
+        if (isInCart(item.id)) {
             setCartArray(cartArray.map((product)=>{
-                if(product.id === dataPelota.item.id){
+                if(product.id === item.id){
                     return {...product, cantidad: product.cantidad + cantidad}
                 } else {
                     return product
                 }
             }))
         } else {
-            console.log(`Agregaste ${dataPelota.title}, ${cantidad} unidades.`);
+            console.log(`Agregaste ${item.title}, ${cantidad} unidades.`);
             const newObject = {
-                item: dataPelota,
+                ...item,
                 cantidad
         }
             setCartArray([...cartArray, newObject])
