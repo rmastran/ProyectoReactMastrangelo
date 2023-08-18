@@ -4,17 +4,17 @@ import CartItem from './CartItem';
 import { Link } from "react-router-dom";
 
 const Cart = () => {
-    const { cartArray, clearCart, deleteItem, total } = useContext(CartContext);
+    const { cartArray, clearCart, total } = useContext(CartContext);
 
     return (
         <div>
             {cartArray.length
             ? <div>
                 {cartArray.map((item)=> <CartItem key={item.id} item={item}/>)}
-                <p>Total a pagar: ${total()}</p>
+                <p style={{textAlign: "center"}}>Total a pagar: ${total()}</p>
                 <div>
                     <button className="btn btn-ganger" onClick={clearCart}>Vaciar carrito</button>
-                    <Link className="btn btn-dark">Terminar la compra</Link>
+                    <Link className="btn btn-dark">Terminar compra</Link>
                 </div>
             </div>
             :    <div>

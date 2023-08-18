@@ -23,7 +23,7 @@ const ItemDetailContainer = () => {
         return <div>Cargando...</div>
     }
     return (
-        <div>
+        <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
             <ItemDetail dataPelota={dataPelota}/>
         </div>
     );

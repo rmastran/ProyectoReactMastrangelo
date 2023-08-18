@@ -22,10 +22,12 @@ function ItemCount ({ initial, stock, onAdd }) {
 
     return (
         <div>
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center", padding: 10}}>
             <Button onClick={restar}>-</Button>
             <span>{contador}</span>
             <Button onClick={sumar}>+</Button>
-            <div>
+            </div>
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                 <Button disabled={contador === 0} onClick={() => onAdd(contador)}>Agregar al Carrito</Button>
             </div>
         </div>

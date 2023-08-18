@@ -16,12 +16,12 @@ const ItemDetail = ({dataPelota}) => {
 
     return (
         <div>
-            <h3>{dataPelota.title}</h3> 
+            <h3 style={{textAlign: "center"}}>{dataPelota.title}</h3> 
             <img src={dataPelota.img} alt={dataPelota.title}/>
-            <p>{dataPelota.description}</p>
-            <p>{dataPelota.price}</p>
+            <p style={{textAlign: "center"}}>{dataPelota.description}</p>
+            <p style={{textAlign: "center"}}>${dataPelota.price}</p>
             {
-                goToCart ? <Link to='/cart'>Terminar mi compra</Link> : <ItemCount initial={1} stock={dataPelota.stock} onAdd={onAdd}/>
+                goToCart ? <Link className="btn btn-dark btn-success" to='/cart'>Ir al carrito</Link> : <ItemCount initial={1} stock={dataPelota.stock} onAdd={onAdd}/>
             }
         </div>
     );
