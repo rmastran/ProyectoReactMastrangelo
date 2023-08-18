@@ -13,8 +13,8 @@ const Cart = () => {
                 {cartArray.map((item)=> <CartItem key={item.id} item={item}/>)}
                 <p style={{textAlign: "center"}}>Total a pagar: ${total()}</p>
                 <div>
-                    <button className="btn btn-ganger" onClick={clearCart}>Vaciar carrito</button>
-                    <Link className="btn btn-dark">Terminar compra</Link>
+                    <button className="btn btn-danger" onClick={clearCart}>Vaciar carrito</button>
+                    <Link className="btn btn-dark" to='/checkout'>Terminar compra</Link>
                 </div>
             </div>
             :    <div>

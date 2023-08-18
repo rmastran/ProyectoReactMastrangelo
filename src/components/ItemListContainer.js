@@ -1,23 +1,40 @@
 import ItemList from './ItemList';
 import { useEffect, useState } from 'react';
-import { getDataPelotas } from '../mock/data';
+import { getDataPelotas, pelotas } from '../mock/data';
 import { useParams } from 'react-router-dom';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../services/firebase';
 
 const ItemListContainer = ({greeting = "Ofertas"}) => {
 
     const [dataPelotas, setDataPelotas] = useState([]);
     const {categoryId}= useParams()
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        getDataPelotas.then(res => {
-            if(categoryId){
-                setDataPelotas(res.filter((dataPelotas)=> dataPelotas.category === categoryId))
-            }else{
-                setDataPelotas(res)
-            }
-        }) 
-    }, [categoryId])
+    //     getDataPelotas.then(res => {
+    //         if(categoryId){
+    //             setDataPelotas(res.filter((dataPelotas)=> dataPelotas.category === categoryId))
+    //         }else{
+    //             setDataPelotas(res)
+    //         }
+    //     }) 
+    // }, [categoryId])
+
+    useEffect(()=> {
+        const coleccionProductos = categoryId ? query(collection(db, "productos"), where("category", "==", categoryId)) : collection(db, "productos")
+        getDocs(coleccionProductos)
+        .then((res)=> {
+            const list = res.docs.map((product)=>{
+                return {
+                    id: product.id,
+                    ...product.data()
+                }
+            })
+            setDataPelotas(list)
+        })
+        .catch((error)=> console.log(error))
+    },[categoryId])
 
     return (
         <div className='d-flex flex-column align-items-center'>
