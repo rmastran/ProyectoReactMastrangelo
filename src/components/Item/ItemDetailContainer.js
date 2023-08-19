@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import ItemDetail from "./ItemDetail";
-import { getItemPelota } from "../mock/data";
+import { getItemPelota } from "../../mock/data";
 import { useParams } from "react-router-dom";
 import { collection, doc, getDoc } from "firebase/firestore";
-import { db } from "../services/firebase";
+import { db } from "../../services/firebase";
 
 const ItemDetailContainer = () => {
 

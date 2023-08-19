@@ -1,9 +1,9 @@
 import './App.css';
-import ItemListContainer from './components/ItemListContainer';
+import ItemListContainer from './components/Item/ItemListContainer';
 import NavBar from './components/Nav/NavBar';
-import ItemDetailContainer from './components/ItemDetailContainer';
+import ItemDetailContainer from './components/Item/ItemDetailContainer';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
-import Cart from './components/Cart';
+import Cart from './components/Cart/Cart';
 import CartProvider from './context/CartContext';
 import React, {useEffect} from 'react';
 import { addDoc, collection } from 'firebase/firestore';

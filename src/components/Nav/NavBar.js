@@ -1,6 +1,6 @@
 import { Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import CartWidget from './CartWidget';
-import Logo from '../Logo';
+import Logo from '../Logo/Logo';
 import { NavLink } from 'react-router-dom';
 
 const NavBar = () => {

@@ -1,9 +1,9 @@
 import ItemList from './ItemList';
 import { useEffect, useState } from 'react';
-import { getDataPelotas, pelotas } from '../mock/data';
+import { getDataPelotas, pelotas } from '../../mock/data';
 import { useParams } from 'react-router-dom';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../services/firebase';
+import { db } from '../../services/firebase';
 
 const ItemListContainer = ({greeting = "Ofertas"}) => {
 

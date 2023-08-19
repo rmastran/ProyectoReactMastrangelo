@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
-import ItemCount from "./Nav/ItemCount";
+import ItemCount from "../Nav/ItemCount";
 import { Link } from "react-router-dom";
-import { CartContext } from "../context/CartContext";
+import { CartContext } from "../../context/CartContext";
 
 const ItemDetail = ({dataPelota}) => {
 
-    const [goToCart, setToCart] = useState(false);
+    const [setToCart] = useState(false);
 
     const { addToCart } = useContext(CartContext);
 
@@ -21,7 +21,12 @@ const ItemDetail = ({dataPelota}) => {
             <p style={{textAlign: "center"}}>{dataPelota.description}</p>
             <p style={{textAlign: "center"}}>${dataPelota.price}</p>
             {
-                goToCart ? <Link className="btn btn-dark btn-success" to='/cart'>Ir al carrito</Link> : <ItemCount initial={1} stock={dataPelota.stock} onAdd={onAdd}/>
+                dataPelota.stock === 0?
+                <div style={{textAlign: "center"}}>¡No hay Stock!</div>
+                :
+                <div>
+                    <Link className="btn btn-dark btn-success" to='/cart'>Ir al carrito</Link> : <ItemCount initial={1} stock={dataPelota.stock} onAdd={onAdd}/>
+                </div>
             }
         </div>
     );
