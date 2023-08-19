@@ -9,7 +9,7 @@ const CartWidget = () => {
             <i className="bi bi-cart2"></i>
             <h2 style={{color: "white", fontSize: 15}}>
                 {cartQuantity() > 0 && <Badge bg="secondary">{cartQuantity()}</Badge>}
-            </h2>;
+            </h2>
         </div>
     );
 }

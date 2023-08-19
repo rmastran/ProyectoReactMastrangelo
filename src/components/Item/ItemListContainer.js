@@ -1,13 +1,13 @@
 import ItemList from './ItemList';
 import { useEffect, useState } from 'react';
-import { getDataPelotas, pelotas } from '../../mock/data';
 import { useParams } from 'react-router-dom';
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { db } from '../../services/firebase';
 
 const ItemListContainer = ({greeting = "Ofertas"}) => {
 
     const [dataPelotas, setDataPelotas] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
     const {categoryId}= useParams()
 
     // useEffect(() => {
@@ -22,7 +22,8 @@ const ItemListContainer = ({greeting = "Ofertas"}) => {
     // }, [categoryId])
 
     useEffect(()=> {
-        const coleccionProductos = categoryId ? query(collection(db, "productos"), where("category", "==", categoryId)) : collection(db, "productos")
+        setIsLoading(true)
+        const coleccionProductos = categoryId ? query(collection(db, "productos"), where("category", "==", categoryId), orderBy("title")) : query(collection(db, "productos"), orderBy("title"))
         getDocs(coleccionProductos)
         .then((res)=> {
             const list = res.docs.map((product)=>{
@@ -34,21 +35,16 @@ const ItemListContainer = ({greeting = "Ofertas"}) => {
             setDataPelotas(list)
         })
         .catch((error)=> console.log(error))
+        .finally(()=> setIsLoading(false))
     },[categoryId])
 
+    if(isLoading){
+        return <div>Cargando...</div>
+    }
     return (
-        <div className='d-flex flex-column align-items-center'>
-            {  dataPelotas.length === 0 
-            ?
-            <h1>Cargando..</h1>
-            :
-            <>
+        <div className='d-flex flex-column align-items-center'>         
             <h2 style={{backgroundColor: "coral", textAlign: "center"}}>{greeting} <span>{categoryId && categoryId}</span></h2>
-            <ItemList dataPelotas={dataPelotas} />
-            </>
-            
-            }
-            
+            <ItemList dataPelotas={dataPelotas} />              
         </div>
                 
     );
