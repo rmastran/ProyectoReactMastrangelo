@@ -7,7 +7,7 @@ const Checkout = () => {
     const [user, setUser] = useState({});
     const [validateEmail, setValidateEmail] = useState("");
     const [orderId, setOrderId] = useState("");
-    const {cart, total, clearCart} = useContext(CartContext);
+    const {cartArray, total, clearCart} = useContext(CartContext);
     const datosComprador = (e) => {
         setUser({
             ...user,
@@ -21,8 +21,8 @@ const Checkout = () => {
         }else{
             let order = {
                 user,
-                item: cart,
-                total: total,
+                item: cartArray,
+                total: total(),
                 date: serverTimestamp()
             }
             const ventas = collection(db, "orders")
