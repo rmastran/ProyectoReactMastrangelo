@@ -1,7 +1,7 @@
 import ItemList from './ItemList';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../services/firebase';
 
 const ItemListContainer = ({greeting = "Ofertas"}) => {
@@ -23,7 +23,7 @@ const ItemListContainer = ({greeting = "Ofertas"}) => {
 
     useEffect(()=> {
         setIsLoading(true)
-        const coleccionProductos = categoryId ? query(collection(db, "productos"), where("category", "==", categoryId), orderBy("title")) : query(collection(db, "productos"), orderBy("title"))
+        const coleccionProductos = categoryId ? query(collection(db, "productos"), where("category", "==", categoryId)) : collection(db, "productos") //query(collection(db, "productos"), orderBy("title"))
         getDocs(coleccionProductos)
         .then((res)=> {
             const list = res.docs.map((product)=>{
