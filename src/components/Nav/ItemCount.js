@@ -24,7 +24,7 @@ function ItemCount ({ initial, stock, onAdd }) {
         <div>
             <div style={{display: "flex", justifyContent: "center", alignItems: "center", padding: 10}}>
             <Button onClick={restar}>-</Button>
-            <span>{contador}</span>
+            <span style={{padding: "10px"}}>{contador}</span>
             <Button onClick={sumar}>+</Button>
             </div>
             <div style={{display: "flex", justifyContent: "center", alignItems: "center"}}>

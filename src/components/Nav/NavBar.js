@@ -2,8 +2,13 @@ import { Container, Nav, NavDropdown, Navbar } from 'react-bootstrap';
 import CartWidget from './CartWidget';
 import Logo from '../Logo/Logo';
 import { NavLink } from 'react-router-dom';
+import { useContext } from 'react';
+import { CartContext } from '../../context/CartContext';
 
 const NavBar = () => {
+    const { getCart } = useContext(CartContext);
+    getCart();
+    
     return (
         <>
           <Navbar bg="dark" data-bs-theme="dark">

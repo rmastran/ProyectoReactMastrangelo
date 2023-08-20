@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { collection, updateDoc, doc } from "firebase/firestore";
+import { collection, updateDoc, doc, setDoc, getDocs, deleteDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
 
 export const CartContext = createContext();
@@ -8,46 +8,80 @@ export const CartProvider = ({ children }) => {
 
     const [cartArray, setCartArray] = useState([]);
 
-    const addToCart = (item, cantidad) => {
-        if (isInCart(item.id)) {
+    const getCart = () => {
+        return new Promise((resolve, reject) => {
+            const coleccionProductos = collection(db, "productos")
+            getDocs(coleccionProductos)
+            .then((res)=> {
+                const products = res.docs.map((product)=>{
+                    return {
+                        id: product.id,
+                        ...product.data()
+                    }
+                })
+                
+                getDocs(collection(db, "cart"))
+                .then((res)=> {
+                    const cart = res.docs.map((cart)=>{
+                        return {
+                            id: cart.id,
+                            cantidad: cart.data().stock
+                        }
+                    })
 
-            const updatedStock = item.stock - cantidad;
-
-            //actualizo stock local en el estado de dataPelota
-            item.stock = updatedStock;
-
-            //actualizo stock en Firebase Firestore
-            const collectionProd = collection(db, "productos");
-            const referenciaAlDoc = doc(collectionProd, item.id);
-
-            //quí se actualiza el estado en Firebase, por lo que la próxima vez que hagas el pedido en Firebase, tendrá el stock actualizado
-            updateDoc(referenciaAlDoc, { stock: updatedStock })
-            .then(() => {
-                console.log("Stock actualizado en Firestore.");
+                    cart.forEach(cartItem => {
+                        const product = products.find(_product => _product.id === cartItem.id);
+                        if (!product) {
+                            return;
+                        }
+                        
+                        if (!isInCart(product.id)) {
+                            addToCart(product, cartItem.cantidad, true);
+                        }
+                    });
+                    resolve();
+                })
+                .catch((error) => {
+                    console.log(error);
+                    reject();
+                })
             })
             .catch((error) => {
-                console.error("Error al actualizar el stock en Firestore:", error);
-            });
+                console.log(error);
+                reject();
+            })
+        });
+    }
 
-            //resto lógica para actualizar carrito
-            setCartArray(cartArray.map((product)=>{
-                if(product.id === item.id){
-                    return {...product, cantidad: product.cantidad + cantidad}
-                } else {
-                    return product
-                }
-            }))
-        } else {
-            console.log(`Agregaste ${item.title}, ${cantidad} unidades.`);
-            const newObject = {
-                ...item,
-                cantidad
+    const addToCart = (item, cantidad, auto) => {
+
+        setDoc(doc(db, "cart", item.id), { stock: parseInt(cantidad) })
+        .then(() => {
+            console.log("Agregado al Carrito.");
+        })
+        .catch((error) => {
+            console.error("Error al agregar al carrito en Firestore:", error);
+        });
+
+        //resto lógica para actualizar carrito
+        const updatedCart = cartArray.filter((_item) => _item.id !== item.id);
+        const newObject = {
+            ...item,
+            cantidad: parseInt(cantidad)
         }
-            setCartArray([...cartArray, newObject])
-            }
+        setCartArray([...updatedCart, newObject])
     }
 
    const clearCart = () => {
+    cartArray.forEach(cartItem => {
+        deleteDoc(doc(db, "cart", cartItem.id))
+        .then(() => {
+            console.log("Carrito Vaciado.");
+        })
+        .catch((error) => {
+            console.error("Error al agregar al carrito en Firestore:", error);
+        });
+    });
     setCartArray([]);
    }
 
@@ -55,12 +89,19 @@ export const CartProvider = ({ children }) => {
     return cartArray.some((item) => item.id === id);
    }
 
-   const deleteItem = (id) => {
-    const updatedCart = cartArray.filter((item) => item.id !== id);
-    setCartArray(updatedCart);
-   }
+    const deleteItem = (id) => {
+        deleteDoc(doc(db, "cart", id))
+        .then(() => {
+            const updatedCart = cartArray.filter((item) => item.id !== id);
+            setCartArray(updatedCart);
+        })
+        .catch((error) => {
+            console.error("Error al agregar al carrito en Firestore:", error);
+        });
+    }
 
    const cartQuantity = () => {
+
     return cartArray.reduce((acc, item)=> acc + item.cantidad, 0)
    }
 
@@ -69,7 +110,7 @@ export const CartProvider = ({ children }) => {
    }
 
     return (
-        <CartContext.Provider value={{cartArray, addToCart, clearCart, deleteItem, cartQuantity, total}}>
+        <CartContext.Provider value={{cartArray, isInCart, addToCart, getCart, clearCart, deleteItem, cartQuantity, total}}>
             {children}
         </CartContext.Provider>
     )

@@ -5,7 +5,7 @@ import ItemDetailContainer from './components/Item/ItemDetailContainer';
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import Cart from './components/Cart/Cart';
 import CartProvider from './context/CartContext';
-import React, {useEffect} from 'react';
+import React, {useEffect, useContext} from 'react';
 import { addDoc, collection } from 'firebase/firestore';
 import { db } from './services/firebase';
 import { pelotas } from './mock/data';
@@ -16,6 +16,7 @@ function App() {
   //   const coleccionProductos = collection(db, 'productos')
   //   pelotas.map((item)=> addDoc(coleccionProductos, item))
   // },[])
+
   return (
     <CartProvider>
       <BrowserRouter>

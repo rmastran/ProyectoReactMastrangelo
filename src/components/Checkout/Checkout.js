@@ -1,4 +1,4 @@
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp, setDoc, doc } from "firebase/firestore";
 import React, { useState, useContext } from "react";
 import { db } from "../../services/firebase";
 import { CartContext } from "../../context/CartContext";
@@ -7,7 +7,7 @@ const Checkout = () => {
     const [user, setUser] = useState({});
     const [validateEmail, setValidateEmail] = useState("");
     const [orderId, setOrderId] = useState("");
-    const {cartArray, total, clearCart} = useContext(CartContext);
+    const {cartArray, total, clearCart, deleteItem} = useContext(CartContext);
     const datosComprador = (e) => {
         setUser({
             ...user,
@@ -32,6 +32,18 @@ const Checkout = () => {
                 clearCart()
             })
             .catch((error)=> console.log(error))
+
+            order.item.forEach(cartItem => {
+                setDoc(doc(db, "productos", cartItem.id), { stock: cartItem.stock - cartItem.cantidad }, {merge: true})
+                .then(() => {
+                    console.log("Compra Realizada");
+                })
+                .catch((error) => {
+                    console.error("Error al comprar en el carrito:", error);
+                });
+
+                deleteItem(cartItem.id);
+            });
         }
     }
     return(
