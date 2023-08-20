@@ -5,7 +5,7 @@ import { CartContext } from "../../context/CartContext";
 
 const ItemDetail = ({dataPelota}) => {
 
-    const [setToCart] = useState(false);
+    const [goToCart, setToCart] = useState(false);
 
     const { addToCart } = useContext(CartContext);
 
@@ -20,8 +20,8 @@ const ItemDetail = ({dataPelota}) => {
             <img src={dataPelota.img} alt={dataPelota.title}/>
             <p style={{textAlign: "center"}}>{dataPelota.description}</p>
             <p style={{textAlign: "center"}}>${dataPelota.price}</p>
-            {
-                dataPelota.stock === 0?
+            { 
+                dataPelota.stock === 0 && goToCart ?
                 <div style={{textAlign: "center"}}>¡No hay Stock!</div>
                 :
                 <div>
